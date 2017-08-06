@@ -8,7 +8,7 @@
 
 Name:           %{?scl_prefix}mongo-cxx-driver
 Version:        3.1.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        The MongoDB C++11 Driver Library
 Group:          Development/Libraries
 License:        ASL 2.0
@@ -59,7 +59,7 @@ This package provides the shared library for working with BSON.
 %package bsoncxx-devel
 Summary:        C++ header files for library for working with BSON
 Group:          Development/Libraries
-Requires:       %{?scl_prefix}bsoncxx%{?_isa} = %{version}-%{release}
+Requires:       %{?scl_prefix}%{pkg_name}-bsoncxx%{?_isa} = %{version}-%{release}
 
 
 %description bsoncxx-devel
@@ -160,6 +160,9 @@ exit $ret
 
 
 %changelog
+* Fri Jun 23 2017 Marek Skalický <mskalick@redhat.com> - 3.1.1-4
+- Fix bsoncxx dependency
+
 * Fri Jun 23 2017 Marek Skalický <mskalick@redhat.com> - 3.1.1-3
 - Run tests during build
 
