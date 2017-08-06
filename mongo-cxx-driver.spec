@@ -2,13 +2,13 @@
 %{!?scl:%global pkg_name %{name}}
 
 # Do we want to run tests during build
-%bcond_with run_tests
+%bcond_without run_tests
 
 %global buildscls %{?scl} devtoolset-6
 
 Name:           %{?scl_prefix}mongo-cxx-driver
 Version:        3.1.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The MongoDB C++11 Driver Library
 Group:          Development/Libraries
 License:        ASL 2.0
@@ -26,7 +26,7 @@ BuildRequires:  %{?scl_prefix}mongo-c-driver-devel >= 1.5.0
 BuildRequires:  %{?scl_prefix}libbson-devel >= 1.5.0
 BuildRequires:  openssl-devel
 BuildRequires:  cyrus-sasl-devel
-%if %{with tests}
+%if %{with run_tests}
 BuildRequires:  %{?scl_prefix}mongodb-server
 %endif
 
@@ -108,7 +108,7 @@ rm -f %{buildroot}%{_libdir}/libmongocxx.a \
 %check
 %{?scl:scl enable %{buildscls} - << \EOF}
 set -ex
-%if %{with tests}
+%if %{with run_tests}
 : Run a server
 mkdir dbtest
 mongod \
@@ -160,6 +160,9 @@ exit $ret
 
 
 %changelog
+* Fri Jun 23 2017 Marek Skalický <mskalick@redhat.com> - 3.1.1-3
+- Run tests during build
+
 * Thu Jun 22 2017 Marek Skalický <mskalick@redhat.com> - 3.1.1-2
 - Convert to SCL
 - Add patch to allow using of older cmake from RHEL
