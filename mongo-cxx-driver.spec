@@ -8,7 +8,7 @@
 
 Name:           %{?scl_prefix}mongo-cxx-driver
 Version:        3.1.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        The MongoDB C++11 Driver Library
 Group:          Development/Libraries
 License:        ASL 2.0
@@ -17,6 +17,8 @@ Source0:        https://github.com/mongodb/%{pkg_name}/archive/r%{version}.tar.g
 
 # Allow building with system cmake which is older than 3.2 required by upstream
 Patch0:         allow-older-cmake.patch
+
+Requires:       %{?scl_prefix}%{pkg_name}-bsoncxx%{?_isa} = %{version}-%{release}
 
 %{?scl:Requires: %{scl}-runtime}
 BuildRequires:  %{?scl_prefix}boost-devel
@@ -160,6 +162,9 @@ exit $ret
 
 
 %changelog
+* Mon Jun 26 2017 Marek Skalický <mskalick@redhat.com> - 3.1.1-5
+- Add explicit package version requirement
+
 * Fri Jun 23 2017 Marek Skalický <mskalick@redhat.com> - 3.1.1-4
 - Fix bsoncxx dependency
 
