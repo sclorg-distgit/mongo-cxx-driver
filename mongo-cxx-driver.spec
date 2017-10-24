@@ -8,7 +8,7 @@
 
 Name:           %{?scl_prefix}mongo-cxx-driver
 Version:        3.1.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        The MongoDB C++11 Driver Library
 Group:          Development/Libraries
 License:        ASL 2.0
@@ -84,6 +84,9 @@ sed -i -e 's|lib\([ /)]\)|lib${LIB_SUFFIX}\1|g' \
 
 sed -i -e "s|lib$|$(basename %{_libdir})|g" \
         src/*/config/*.pc.in
+
+# suffix soname with SCL name
+sed -i -e "s| VERSION | VERSION %{?scl_prefix}|g" -e "s|SOVERSION |SOVERSION %{?scl_prefix}|g" src/*/CMakeLists.txt
 %{?scl:EOF}
 
 
@@ -162,6 +165,10 @@ exit $ret
 
 
 %changelog
+* Mon Aug 28 2017 Marek Skalický <mskalick@redhat.com> - 3.1.2-2
+- Suffix libraries with SCL name
+  Resolves: RHBZ#1485862
+
 * Tue Jul 18 2017 Marek Skalický <mskalick@redhat.com> - 3.1.2-1
 - Update to 3.1.2
   Resolves: RHBZ#1474255
